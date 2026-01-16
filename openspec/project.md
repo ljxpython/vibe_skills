@@ -1,9 +1,12 @@
 # Project Context
 
 ## Purpose
-本仓库用于沉淀“规范驱动”的项目资料：用 OpenSpec 管理需求/设计/任务清单，并提供一套可复用的模板与约定，方便人和 AI 助手在同一套规则下协作。
+本仓库用于收集与沉淀我常用的：
+- skills（技能说明/流程）
+- commands（常用命令封装与用法）
+- system prompts（系统提示词/规则约定）
 
-当前仓库内容以文档与模板为主（`openspec/`、`.spec-workflow/`、`.opencode/`），暂无明确的业务运行代码；后续若引入代码，请先把对应 capability 规范补齐到 `openspec/specs/`。
+目标是让人和 AI 助手在同一套“可复用、可查找、可维护”的资料库里协作与复用，而不是构建一个可运行的业务服务。
 
 ## Tech Stack
 - 文档：Markdown（规范/模板/说明）
@@ -41,31 +44,24 @@ openspec/
 ```
 
 ### Testing Strategy
-当前以“规范校验”替代传统测试：
-- 变更提交前至少跑一次：`openspec validate <change-id> --strict --no-interactive`
-- 日常保证仓库健康：`openspec validate --strict --no-interactive`
+当前不要求 CI/自动化校验；以“人工审阅 + 文档自洽”为准。
 
-若未来引入可执行代码，再补充：
-- 单元测试框架（TODO：由你确定）
-- CI（TODO：是否使用 GitHub Actions/其他）
+若未来引入可执行代码或需要质量门禁，再补充测试与校验策略。
 
 ### Git Workflow
-推荐（没必要搞花活）：
-- `main` 为主分支，功能/变更走 PR 合并。
-- PR 尽量小且聚焦：一个 change-id 对应一组完整文档（proposal/tasks/必要的 spec delta）。
-- 提交信息建议：`<type>(<scope>): <message>`，其中 `<scope>` 优先用 capability 或 change-id（例如 `docs(openspec): fill project context`）。
+推荐（简单直接）：
+- 修改完成后直接提交即可（不强制 PR/分支策略）。
+- 提交信息建议：`<type>(<scope>): <message>`，其中 `<scope>` 优先用 capability 或 change-id（例如 `docs(openspec): update project context`）。
 
 ## Domain Context
 给 AI 助手的“上下文真相”：
-- 这是一个“规则与模板仓库”，核心产物是 `openspec/` 下的规范与变更提案，而不是某个可运行服务。
+- 这是一个“技能/命令/系统提示词”的资料库，核心产物是文档与模板，而不是某个可运行服务。
 - 一切讨论最终要落到“可验收”的 Requirements/Scenarios 上；任务清单（tasks.md）必须能一条条做完并打勾。
 - 文档里出现的受管区块（例如带 `OPENSPEC:START/END` 的片段）不要手贱乱改，保持可被工具自动更新。
 
 ## Important Constraints
-- 不要编造不存在的业务与技术栈：仓库目前缺少代码与依赖清单，未确认的信息一律标注 TODO 并向维护者确认。
-- 变更提案必须可通过 OpenSpec 严格校验（`--strict --no-interactive`）。
+- 不要编造不存在的业务与技术栈：本仓库不承诺存在业务代码与运行时环境。
 - 执行命令时路径统一用双引号包裹，避免空格/特殊字符把你坑死。
 
 ## External Dependencies
-- OpenSpec CLI（用于 `list/show/validate/archive` 等）
-- `.spec-workflow/`（本仓库存放的规范模板；若你们有对应工具/脚本消费它，后续在此补充）
+无外部依赖。
