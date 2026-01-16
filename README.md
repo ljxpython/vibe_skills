@@ -36,3 +36,8 @@
 - 关联变更的 capability spec 放到 `openspec/changes/<change-id>/specs/<capability>/spec.md`
 
 > 不想搞这套也行：小改动就直接改文档提交，保持变更小而清晰就够了。
+
+## 借鉴的仓库
+- https://github.com/OthmanAdi/planning-with-files/tree/master
+- https://github.com/Fission-AI/OpenSpec
+- https://github.com/nextlevelbuilder/ui-ux-pro-max-skill
