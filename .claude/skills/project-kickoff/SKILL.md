@@ -39,6 +39,7 @@ allowed-tools:
 - 行动前必须与用户确认配合事项、必要信息与资源
 - 需要技术架构图/时序图时使用 Mermaid
 - 阶段性产出与错误修复记录必须写入 `/docs`
+- 架构级变更的文档统一写入 `/docs`
 
 ## 强制联动：planning-with-files
 
