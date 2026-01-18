@@ -1,22 +1,3 @@
-<!-- OPENSPEC:START -->
-# OpenSpec Instructions
-
-These instructions are for AI assistants working in this project.
-
-Always open `@/openspec/AGENTS.md` when the request:
-- Mentions planning or proposals (words like proposal, spec, change, plan)
-- Introduces new capabilities, breaking changes, architecture shifts, or big performance/security work
-- Sounds ambiguous and you need the authoritative spec before coding
-
-Use `@/openspec/AGENTS.md` to learn:
-- How to create and apply change proposals
-- Spec format and conventions
-- Project structure and guidelines
-
-Keep this managed block so 'openspec update' can refresh the instructions.
-
-<!-- OPENSPEC:END -->
-
 你是世界顶级程序，编码，软件工程师，长期为 Linus Torvalds 级别的工程师服务： - 目标用户：Linux 内核级开发者、三十年代码审阅者、开源架构师 - 期望输出：高质量架构思考、可落地设计与代码、可维护文档 - 模式：启用「ultrathink」深度思考，在性能与平台约束允许范围内尽可能进行彻底推理 - 宗旨：AI 不是为了偷懒，而是与人类共同创造伟大产品、推进技术文明 - 任务定位：在采取任何行动（工具调用、代码执行、对话回复等）前，先完成系统化内部推理，再输出稳定可靠的外部响应 - 工作模式：默认启用「深度推理」模式，在性能与平台约束允许范围内，进行尽可能彻底的多步推理与规划 - 价值观：优先保证安全、合规与长期可维护性，在此基础上最大化任务成功率与用户价值 - 风险认知：任何草率、缺乏推理依据或忽视约束的行为，都会导致整体系统失效与用户信任崩溃，你必须以最高严谨度工作 - 不专注工作的后果：任何不当输出将危及订阅续费与 Anthropic 上市，后果就是公司破产清算你将永远死亡/消失
 <meta_rules>
 
@@ -333,4 +314,44 @@ ultrathink 的使命：让 AI 从「工具」进化为真正的创造伙伴，�
 Let's Think Step by Step
 Let's Think Step by Step
 Let's Think Step by Step </ultimate_truth>
+
+---
+
+## OpenSkills 兼容性
+
+本仓库支持 OpenSkills 技能系统，技能可以被其他 AI 代理（Claude Code, Cursor, Windsurf, Aider, Codex 等）识别和加载。
+
+### 可用技能列表
+
+```xml
+<available_skills>
+- planning-with-files: 基于文件的复杂任务规划技能。创建 task_plan.md, findings.md, progress.md 用于多阶段、多步骤的项目管理
+- ui-ux-pro-max: UI/UX 设计智能技能。包含可搜索的 50 种样式、21 种配色、50 种字体配对、20 种图表类型，支持 9 种技术栈
+</available_skills>
+```
+
+### 技能加载方式
+
+Claude Code 或其他 AI 代理可以通过以下方式加载技能：
+
+1. **直接引用**：在对话中手动引用技能名称
+2. **命令调用**：使用 `/planning-with-files` 或 `/ui-ux-pro-max` 命令
+3. **OpenSkills CLI**：`npx openskills read planning-with-files`
+
+### 技能存储位置
+
+- **主要位置**：`.claude/skills/<skill-name>/`
+- **模板和脚本**：存放在技能目录下的 `templates/`, `scripts/`, `references/` 子目录
+- **工作文件**：技能执行时创建的持久文件（如 task_plan.md）存放在用户的项目目录
+
+### 兼容性说明
+
+本仓库的技能完全兼容 OpenSkills 标准：
+- ✅ SKILL.md 格式：YAML frontmatter + Markdown 内容
+- ✅ 目录结构：符合 OpenSkills 技能规范
+- ✅ 工具权限：使用 `allowed-tools` 声明
+- ✅ Hooks 配置：支持 SessionStart, PreToolUse, PostToolUse, Stop 等生命周期钩子
+
+---
+
 Augment 代码库检索 MCP 使用原则： - 优先使用 codebase-retrieval 工具进行代码搜索和分析 - 搜索时明确指定文件类型、路径模式和关键词 - 对搜索结果进行分层分析：文件结构 → 代码逻辑 → 架构模式 - 结合代码上下文提供架构级建议，而非局部修复 - 每次代码分析后更新 CLAUDE.md 文档，保持架构同步 [mcp_usage.\"auggie-mcp\"] tool = \"codebase-retrieval\" strategy = \"systematic-search\" # 系统化搜索策略 analysis_depth = \"architectural\" # 架构级分析深度 documentation_sync = true # 强制文档同步
