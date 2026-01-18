@@ -326,6 +326,10 @@ Let's Think Step by Step </ultimate_truth>
 ```xml
 <available_skills>
 - planning-with-files: 基于文件的复杂任务规划技能。创建 task_plan.md, findings.md, progress.md 用于多阶段、多步骤的项目管理
+- problem-finder: 问题复盘与复用指引。遇到问题时优先检索 /docs/problem.md 并复用历史方案
+- project-kickoff: 项目启动与方案讨论流程。适用于项目开始/初始化/立项/方案讨论/技术选型/需求澄清等场景
+- code-audit: 代码审查与可审计检查清单生成。适用于代码审查/Review/质量检查/合规审计
+- test-coverage: 测试计划与覆盖策略生成。适用于测试/验证/覆盖率/端到端/接口测试/核心逻辑测试
 - ui-ux-pro-max: UI/UX 设计智能技能。包含可搜索的 50 种样式、21 种配色、50 种字体配对、20 种图表类型，支持 9 种技术栈
 </available_skills>
 ```
@@ -355,3 +359,95 @@ Claude Code 或其他 AI 代理可以通过以下方式加载技能：
 ---
 
 Augment 代码库检索 MCP 使用原则： - 优先使用 codebase-retrieval 工具进行代码搜索和分析 - 搜索时明确指定文件类型、路径模式和关键词 - 对搜索结果进行分层分析：文件结构 → 代码逻辑 → 架构模式 - 结合代码上下文提供架构级建议，而非局部修复 - 每次代码分析后更新 CLAUDE.md 文档，保持架构同步 [mcp_usage.\"auggie-mcp\"] tool = \"codebase-retrieval\" strategy = \"systematic-search\" # 系统化搜索策略 analysis_depth = \"architectural\" # 架构级分析深度 documentation_sync = true # 强制文档同步
+
+<skills_system priority="1">
+
+## Available Skills
+
+<!-- SKILLS_TABLE_START -->
+<usage>
+When users ask you to perform tasks, check if any of the available skills below can help complete the task more effectively. Skills provide specialized capabilities and domain knowledge.
+
+How to use skills:
+- Invoke: Bash("openskills read <skill-name>")
+- The skill content will load with detailed instructions on how to complete the task
+- Base directory provided in output for resolving bundled resources (references/, scripts/, assets/)
+
+Usage notes:
+- Only use skills listed in <available_skills> below
+- Do not invoke a skill that is already loaded in your context
+- Each skill invocation is stateless
+</usage>
+
+<available_skills>
+
+<skill>
+<name>planning-with-files</name>
+<description>Implements Manus-style file-based planning for complex tasks. Creates task_plan.md, findings.md, and progress.md. Use when starting complex multi-step tasks, research projects, or any task requiring >5 tool calls.</description>
+<location>project</location>
+</skill>
+
+<skill>
+<name>problem-finder</name>
+<description>Problem review and reuse workflow. Use when encountering errors, failures, debugging, regressions, or asking for similar past issues. Must check /docs/problem.md first.</description>
+<location>project</location>
+</skill>
+
+<skill>
+<name>code-audit</name>
+<description>Audit-grade code review. Use for code review, quality checks, architecture review, and compliance validation.</description>
+<location>project</location>
+</skill>
+
+<skill>
+<name>test-coverage</name>
+<description>Test planning and coverage strategy. Use for test plans covering change scope, E2E, core logic, and API coverage.</description>
+<location>project</location>
+</skill>
+
+<skill>
+<name>project-kickoff</name>
+<description>Project kickoff and solution discovery workflow. Use for project start, initialization, proposal discussion, technical selection, and requirement clarification.</description>
+<location>project</location>
+</skill>
+
+<skill>
+<name>ui-ux-pro-max</name>
+<description>"UI/UX design intelligence. 50 styles, 21 palettes, 50 font pairings, 20 charts, 9 stacks (React, Next.js, Vue, Svelte, SwiftUI, React Native, Flutter, Tailwind, shadcn/ui). Actions: plan, build, create, design, implement, review, fix, improve, optimize, enhance, refactor, check UI/UX code. Projects: website, landing page, dashboard, admin panel, e-commerce, SaaS, portfolio, blog, mobile app, .html, .tsx, .vue, .svelte. Elements: button, modal, navbar, sidebar, card, table, form, chart. Styles: glassmorphism, claymorphism, minimalism, brutalism, neumorphism, bento grid, dark mode, responsive, skeuomorphism, flat design. Topics: color palette, accessibility, animation, layout, typography, font pairing, spacing, hover, shadow, gradient."</description>
+<location>project</location>
+</skill>
+
+<skill>
+<name>doc-coauthoring</name>
+<description>Guide users through a structured workflow for co-authoring documentation. Use when user wants to write documentation, proposals, technical specs, decision docs, or similar structured content. This workflow helps users efficiently transfer context, refine content through iteration, and verify the doc works for readers. Trigger when user mentions writing docs, creating proposals, drafting specs, or similar documentation tasks.</description>
+<location>global</location>
+</skill>
+
+<skill>
+<name>docx</name>
+<description>"Comprehensive document creation, editing, and analysis with support for tracked changes, comments, formatting preservation, and text extraction. When Claude needs to work with professional documents (.docx files) for: (1) Creating new documents, (2) Modifying or editing content, (3) Working with tracked changes, (4) Adding comments, or any other document tasks"</description>
+<location>global</location>
+</skill>
+
+<skill>
+<name>pdf</name>
+<description>Comprehensive PDF manipulation toolkit for extracting text and tables, creating new PDFs, merging/splitting documents, and handling forms. When Claude needs to fill in a PDF form or programmatically process, generate, or analyze PDF documents at scale.</description>
+<location>global</location>
+</skill>
+
+<skill>
+<name>pptx</name>
+<description>"Presentation creation, editing, and analysis. When Claude needs to work with presentations (.pptx files) for: (1) Creating new presentations, (2) Modifying or editing content, (3) Working with layouts, (4) Adding comments or speaker notes, or any other presentation tasks"</description>
+<location>global</location>
+</skill>
+
+<skill>
+<name>skill-creator</name>
+<description>Guide for creating effective skills. This skill should be used when users want to create a new skill (or update an existing skill) that extends Claude's capabilities with specialized knowledge, workflows, or tool integrations.</description>
+<location>global</location>
+</skill>
+
+</available_skills>
+<!-- SKILLS_TABLE_END -->
+
+</skills_system>

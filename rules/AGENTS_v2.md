@@ -314,4 +314,22 @@ ultrathink 的使命：让 AI 从「工具」进化为真正的创造伙伴，�
 Let's Think Step by Step
 Let's Think Step by Step
 Let's Think Step by Step </ultimate_truth>
-Augment 代码库检索 MCP 使用原则： - 优先使用 codebase-retrieval 工具进行代码搜索和分析 - 搜索时明确指定文件类型、路径模式和关键词 - 对搜索结果进行分层分析：文件结构 → 代码逻辑 → 架构模式 - 结合代码上下文提供架构级建议，而非局部修复 - 每次代码分析后更新 CLAUDE.md 文档，保持架构同步 [mcp_usage.\"auggie-mcp\"] tool = \"codebase-retrieval\" strategy = \"systematic-search\" # 系统化搜索策略 analysis_depth = \"architectural\" # 架构级分析深度 documentation_sync = true # 强制文档同步
+
+## OpenSkills 兼容性
+
+本仓库支持 OpenSkills 技能系统，技能可以被其他 AI 代理识别和加载。
+
+### 可用技能列表
+
+```xml
+<available_skills>
+- planning-with-files: 基于文件的复杂任务规划技能。创建 task_plan.md, findings.md, progress.md 用于多阶段、多步骤的项目管理
+- problem-finder: 问题复盘与复用指引。遇到问题时优先检索 /docs/problem.md 并复用历史方案
+- project-kickoff: 项目启动与方案讨论流程。适用于项目开始/初始化/立项/方案讨论/技术选型/需求澄清等场景
+- code-audit: 代码审查与可审计检查清单生成。适用于代码审查/Review/质量检查/合规审计
+- test-coverage: 测试计划与覆盖策略生成。适用于测试/验证/覆盖率/端到端/接口测试/核心逻辑测试
+- ui-ux-pro-max: UI/UX 设计智能技能。包含可搜索的 50 种样式、21 种配色、50 种字体配对、20 种图表类型，支持 9 种技术栈
+</available_skills>
+```
+
+Augment 代码库检索 MCP 使用原则： - 优先使用 codebase-retrieval 工具进行代码搜索和分析 - 搜索时明确指定文件类型、路径模式和关键词 - 对搜索结果进行分层分析：文件结构 → 代码逻辑 → 架构模式 - 结合代码上下文提供架构级建议，而非局部修复 - 每次代码分析后更新 CLAUDE.md 文档，保持架构同步 [mcp_usage."auggie-mcp"] tool = "codebase-retrieval" strategy = "systematic-search" # 系统化搜索策略 analysis_depth = "architectural" # 架构级分析深度 documentation_sync = true # 强制文档同步

@@ -314,3 +314,20 @@ ultrathink 的使命：让 AI 从「工具」进化为真正的创造伙伴，�
 Let's Think Step by Step
 Let's Think Step by Step
 Let's Think Step by Step </ultimate_truth>
+
+## OpenSkills 兼容性
+
+本仓库支持 OpenSkills 技能系统，技能可以被其他 AI 代理识别和加载。
+
+### 可用技能列表
+
+```xml
+<available_skills>
+- planning-with-files: 基于文件的复杂任务规划技能。创建 task_plan.md, findings.md, progress.md 用于多阶段、多步骤的项目管理
+- problem-finder: 问题复盘与复用指引。遇到问题时优先检索 /docs/problem.md 并复用历史方案
+- project-kickoff: 项目启动与方案讨论流程。适用于项目开始/初始化/立项/方案讨论/技术选型/需求澄清等场景
+- code-audit: 代码审查与可审计检查清单生成。适用于代码审查/Review/质量检查/合规审计
+- test-coverage: 测试计划与覆盖策略生成。适用于测试/验证/覆盖率/端到端/接口测试/核心逻辑测试
+- ui-ux-pro-max: UI/UX 设计智能技能。包含可搜索的 50 种样式、21 种配色、50 种字体配对、20 种图表类型，支持 9 种技术栈
+</available_skills>
+```
