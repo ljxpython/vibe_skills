@@ -33,7 +33,7 @@ project/
   - `pro create myapp`
   - 选择 `umi@4`
   - 选择 `simple`
-  - `cd myapp && yarn` 或 `npm install`
+  - `cd myapp && yarn`
 
 ## 前端包管理器
 
