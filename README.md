@@ -47,7 +47,7 @@
 - 推荐文档：`project-summary.md`、`problem.md`
 
 ### 4. 代码审查（门禁）
-- 使用 `/review` 或触发 `code-audit`
+- 使用 `/code-audit` 或触发 `code-audit`
 - 输出审查结论与 PASS/BLOCK，记录到 `docs/review.md`
 
 ### 5. 代码测试（门禁）

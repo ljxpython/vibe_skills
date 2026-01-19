@@ -1,5 +1,5 @@
 ---
-description: "按 code-audit skill 的审查规范生成检查清单与逐项验证，并写入 docs/review.md"
+description: "按 code-audit skill 的审查规范生成检查清单与逐项验证，并写入 docs/review.md（命令名：/code-audit）"
 ---
 
 本命令对应 skill：`code-audit`（审计式代码审查）。
