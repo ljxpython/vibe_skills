@@ -1,0 +1,52 @@
+model_provider = "xyz"
+model = "gpt-5.2"
+model_reasoning_effort = "high"
+disable_response_storage = true
+preferred_auth_method = "apikey"
+
+[model_providers.xyz]
+name = "xyz"
+base_url = "http://api.mirrorcodex.xyz:3000/openai"
+wire_api = "responses"
+temp_env_key = "XYZ_API_KEY"
+requires_openai_auth = true
+model = "gpt-5.2"
+
+[model_providers.crs]
+name = "crs"
+base_url = "http://card.fishtrip.top/openai"
+wire_api = "responses"
+temp_env_key = "CRS_API_KEY"
+requires_openai_auth = true
+model = "gpt-5.1-codex-max"
+
+[features]
+web_search_request = true
+
+[tools]
+view_image = true
+
+sandbox_mode = "danger-full-access"
+approval_policy = "never"
+
+[mcp_servers.context7]
+type = "stdio"
+command = "npx"
+args = ["-y", "@upstash/context7-mcp@latest"]
+startup_timeout_sec = 30
+
+[mcp_servers.sequential-thinking]
+type = "stdio"
+command = "npx"
+args = ["-y", "@modelcontextprotocol/server-sequential-thinking"]
+
+[mcp_servers.playwright]
+type = "stdio"
+command = "npx"
+args = ["-y", "@playwright/mcp@latest"]
+startup_timeout_sec = 30
+
+[mcp_servers."augment-context-engine"]
+type = "stdio"
+command = "auggie"
+args = ["--mcp"]
