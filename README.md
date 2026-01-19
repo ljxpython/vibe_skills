@@ -43,21 +43,21 @@
 - 新窗口恢复顺序：`task_plan.md` → `findings.md` → `progress.md`
 
 ### 3. ToDo 与进度
-- 所有阶段性产出与问题都记录到 `/docs`
+- 所有阶段性产出与问题都记录到 `docs/`
 - 推荐文档：`project-summary.md`、`problem.md`
 
 ### 4. 代码审查（门禁）
 - 使用 `/review` 或触发 `code-audit`
-- 输出审查结论与 PASS/BLOCK，记录到 `/docs/review.md`
+- 输出审查结论与 PASS/BLOCK，记录到 `docs/review.md`
 
 ### 5. 代码测试（门禁）
 - 使用 `/test-plan` 或触发 `test-coverage`
 - 覆盖：本次改动 + E2E + 核心逻辑 + 每个接口
-- 输出测试计划与 PASS/BLOCK，记录到 `/docs/test-plan.md`
+- 输出测试计划与 PASS/BLOCK，记录到 `docs/test-plan.md`
 
 ### 6. 问题复盘与复用
 - 遇到问题触发 `problem-finder`
-- 解决后使用 `/problem-summary` 追加到 `/docs/problem.md`
+- 解决后使用 `/problem-summary` 追加到 `docs/problem.md`
 
 ## 约定（别搞花的）
 - 面向人的文本（说明、约束、提示词内容）用中文；标识符（目录名/文件名/change-id 等）用简洁英文
@@ -73,7 +73,7 @@
 ```xml
 <available_skills>
 - planning-with-files: 基于文件的复杂任务规划技能。创建 task_plan.md, findings.md, progress.md 用于多阶段、多步骤的项目管理
-- problem-finder: 问题复盘与复用指引。遇到问题时优先检索 /docs/problem.md 并复用历史方案
+- problem-finder: 问题复盘与复用指引。遇到问题时优先检索 `docs/problem.md` 并复用历史方案
 - project-kickoff: 项目启动与方案讨论流程。适用于项目开始/初始化/立项/方案讨论/技术选型/需求澄清等场景
 - code-audit: 代码审查与可审计检查清单生成。适用于代码审查/Review/质量检查/合规审计
 - test-coverage: 测试计划与覆盖策略生成。适用于测试/验证/覆盖率/端到端/接口测试/核心逻辑测试
@@ -147,7 +147,7 @@ npx openskills install /path/to/vibe_skills
 **特点**:
 - 生成可判定检查点（Yes/No/Unknown）
 - 逐项逻辑验证与证据链
-- 输出审计式结论并记录到 `/docs/review.md`
+- 输出审计式结论并记录到 `docs/review.md`
 
 **用法**: 在“代码审查/Review/合规审计”等场景自动触发
 
@@ -156,7 +156,7 @@ npx openskills install /path/to/vibe_skills
 
 **特点**:
 - 覆盖本次改动 + 端到端 + 核心逻辑 + 每个接口
-- 输出可执行测试计划并记录到 `/docs/test-plan.md`
+- 输出可执行测试计划并记录到 `docs/test-plan.md`
 
 **用法**: 在“测试/验证/覆盖率/端到端”等场景自动触发
 
@@ -183,6 +183,87 @@ UI/UX 设计智能技能，包含可搜索的设计指南数据库。
 
 **用法**: 通过搜索查询快速查找设计指南
 
+
+
+## 如何嵌入到 claudecode opencode codex中
+
+### codex
+
+skill直接使用将skill复制到.codex/skills 目录下，所有目录共享则放到`~/.codex/skills`
+
+command需要复制到`~/.codex/prompts`中，没有则创建
+
+agents.md则放到项目的根目录中
+
+
+
+### claude code
+
+将当前项目下的`.claude` 目录直接放入项目下即可
+
+### opencode
+
+其实兼容cluade，也可以将当前项目下的`.claude` 目录直接放入项目，然后修改为`.opencode` 
+
+
+
 ## 参鉴的仓库
 - https://github.com/OthmanAdi/planning-with-files/tree/master
+
+  
+
 - https://github.com/nextlevelbuilder/ui-ux-pro-max-skill
+
+  - ```
+    npm install -g uipro-cli
+    
+    # Go to your project
+    cd /path/to/your/project
+    
+    # Install for your AI assistant
+    uipro init --ai claude      # Claude Code
+    uipro init --ai cursor      # Cursor
+    uipro init --ai windsurf    # Windsurf
+    uipro init --ai antigravity # Antigravity (.agent + .shared)
+    uipro init --ai copilot     # GitHub Copilot
+    uipro init --ai kiro        # Kiro
+    uipro init --ai codex       # Codex CLI
+    uipro init --ai qoder       # Qoder
+    uipro init --ai roocode     # Roo Code
+    uipro init --ai gemini      # Gemini CLI
+    uipro init --ai trae        # Trae
+    uipro init --ai all         # All assistants
+    ```
+
+    
+
+- https://github.com/obra/superpowers 
+
+  - 该工具安装方法：
+
+    ```
+    Claude Code（通过插件市场）
+    # 在 Claude Code 中，首先要注册市场：
+    
+    /plugin marketplace add obra/superpowers-marketplace
+    
+    
+    # 然后从这个应用市场安装插件：
+    
+    /plugin install superpowers@superpowers-marketplace
+    ```
+
+  - ```
+    Tell Codex:  
+    
+    Fetch and follow instructions from https://raw.githubusercontent.com/obra/superpowers/refs/heads/main/.codex/INSTALL.md
+    
+    ```
+
+  - ```
+    Tell OpenCode:  
+    
+    Fetch and follow instructions from https://raw.githubusercontent.com/obra/superpowers/refs/heads/main/.opencode/INSTALL.md
+    ```
+
+  - 
