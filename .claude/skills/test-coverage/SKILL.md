@@ -1,9 +1,18 @@
 ---
 name: test-coverage
 description: |
-  测试计划与覆盖策略生成。适用于“测试/验证/覆盖率/端到端/接口测试/核心逻辑测试/回归”等场景。
+  测试计划与覆盖策略生成。适用于“测试/test/验证/verify/覆盖率/coverage/端到端/E2E/接口测试/API test/核心逻辑测试/回归/regression”等场景。
+  也适用于用户希望直接生成测试计划或触发命令：`/test-plan`。
   触发后必须覆盖本次改动 + E2E + 核心逻辑 + 每个接口测试，并输出可执行测试计划。
   不适用：无需测试的纯讨论。
+user-invocable: true
+allowed-tools:
+  - Read
+  - Write
+  - Edit
+  - Glob
+  - Grep
+  - Bash
 ---
 
 # 测试计划与覆盖 Skill
@@ -17,7 +26,7 @@ description: |
 5. 生成测试范围映射表与用例清单
 6. 输出执行命令与验证方式
 7. 给出放行结论（PASS/BLOCK）与阻断理由
-8. 结果写入 `/docs/test-plan.md`
+8. 结果写入 `docs/test-plan.md`
 
 ## 输出要求
 
@@ -27,4 +36,4 @@ description: |
 
 ## 产出
 
-- `/docs/test-plan.md`（测试计划）
+- `docs/test-plan.md`（测试计划）

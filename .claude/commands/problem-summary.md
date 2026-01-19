@@ -1,11 +1,15 @@
 ---
-description: "总结本次问题、解决方案、关键代码与参考资料，并追加到 /docs/problem.md"
+description: "按 problem-finder 的复盘规范总结问题并写入 docs/problem.md（写入前先复用历史记录）"
 ---
+
+本命令与 skill 的关系：
+- `problem-finder`: 负责“先查历史、优先复用”的排查策略
+- `/problem-summary`（本命令）：负责“把本次问题固化到 docs/problem.md”
 
 请执行以下流程并输出：
 
 1. 检查 `docs/` 是否存在；若不存在则创建。
-2. 检查 `/docs/problem.md` 是否存在；若不存在则新建并写入文件头。
+2. 检查 `docs/problem.md` 是否存在；若不存在则新建并写入文件头。
 3. 在写入前先快速检索 `problem.md` 是否已有相似问题：
    - 至少用 2 组关键词（错误码/异常类型/模块名）
    - 推荐关键词模板：
