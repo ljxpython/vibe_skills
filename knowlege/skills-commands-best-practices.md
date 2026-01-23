@@ -96,8 +96,8 @@ description: |
 
 ## 目录与放置规范（本仓库约定）
 
-- Skills 目录：`.claude/skills/<skill-name>/SKILL.md`
-- Commands 目录：`.claude/commands/`（当前为空，可新增）
+- Skills 目录：`.opencode/skills/<skill-name>/SKILL.md`
+- Commands 目录：`.opencode/commands/`
 - 参考与模板：`references/`、`templates/`、`scripts/`
 
 ## 测试与验证建议

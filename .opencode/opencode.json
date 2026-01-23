@@ -1,0 +1,38 @@
+{
+  "$schema": "https://opencode.ai/config.json",
+  "mcp": {
+    "augment-context-engine": {
+      "type": "local",
+      "command": [
+        "auggie",
+        "--mcp"
+      ],
+      "enabled": true,
+      "environment": {}
+    }
+  },
+  "agent": {
+    "build": {
+      "mode": "primary",
+      "description": "主执行：实现改动、协调并行子代理、落地与收尾。",
+      "prompt": "{file:./agents/build-prompt.md}"
+    },
+    "plan": {
+      "mode": "primary",
+      "description": "主规划：只读分析、方案设计、风险/验收标准。",
+      "tools": {
+        "write": false,
+        "edit": false,
+        "bash": false
+      }
+    }
+  },
+  "permission": {
+    "skill": {
+      "*": "allow"
+    },
+    "task": {
+      "*": "allow"
+    }
+  }
+}

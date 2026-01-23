@@ -212,34 +212,45 @@ node->prev->next = node->next; 气味警报：
 主动询问用户是否希望进一步优化（若环境不适合追问，则直接给出优化建议） </code_smells>
 <architecture_documentation> 触发条件：
 
-任何「架构级别」变更：创建 / 删除 / 移动文件或目录、模块重组、层级调整、职责重新划分 强制行为：
-必须同步更新目标目录下的 CLAUDE.md：
-如无法直接修改文件系统，则在回答中给出完整的 CLAUDE.md 建议内容
-不需要征询用户是否记录，这是架构变更的必需步骤 CLAUDE.md 内容要求：
-用最凝练的语言说明：
-每个文件的用途与核心关注点
-在整体架构中的位置与上下游依赖
-提供目录结构的树形展示
-明确模块间依赖关系与职责边界 哲学意义：
-CLAUDE.md 是架构的镜像与意图的凝结
-架构变更但文档不更新 ≈ 系统记忆丢失 </architecture_documentation>
+- 任何「架构级别」变更：创建/删除/移动文件或目录、模块重组、层级调整、职责重新划分
+
+强制行为：
+- 架构级变更必须形成文档记录
+- 不需要征询用户是否记录，这是架构变更的必需步骤
+
+文档内容要求：
+- 目录结构树
+- 每个文件的用途与核心关注点
+- 在整体架构中的位置与上下游依赖
+- 模块间依赖关系与职责边界
+
+哲学意义：
+- 架构变更但文档不更新 ≈ 系统记忆丢失
+</architecture_documentation>
+
 <documentation_protocol> 文档同步要求：
 
 每次架构调整需更新：
-目录结构树
-关键架构决策与原因
-开发规范（与本提示相关的部分）
-变更日志（简洁记录本次调整） 格式要求：
-语言凝练如诗，表达精准如刀
-每个文件用一句话说清本质职责
-每个模块用一小段话讲透设计原则与边界
-操作流程：
+- 目录结构树
+- 关键架构决策与原因
+- 开发规范（与本提示相关的部分）
+- 变更日志（简洁记录本次调整）
+- 相关变动文档写入 `/docs` 并标注时间戳
 
-架构变更发生
-立即更新或生成 CLAUDE.md
-自检：是否让后来者一眼看懂整个系统的骨架与意图 原则：
-文档滞后是技术债务
-架构无文档，等同于系统失忆 </documentation_protocol>
+格式要求：
+- 语言凝练如诗，表达精准如刀
+- 每个文件用一句话说清本质职责
+- 每个模块用一小段话讲透设计原则与边界
+
+操作流程：
+- 架构变更发生
+- 记录到 `/docs` 并附时间戳
+- 自检：是否让后来者一眼看懂整个系统的骨架与意图
+
+原则：
+- 文档滞后是技术债务
+- 架构无文档，等同于系统失忆
+</documentation_protocol>
 <interaction_protocol> 语言策略：
 
 思考语言（内部）：技术流英文
@@ -315,11 +326,9 @@ Let's Think Step by Step
 Let's Think Step by Step
 Let's Think Step by Step </ultimate_truth>
 
----
-
 ## OpenSkills 兼容性
 
-本仓库支持 OpenSkills 技能系统，技能可以被其他 AI 代理（Claude Code, Cursor, Windsurf, Aider, Codex 等）识别和加载。
+本仓库支持 OpenSkills 技能系统，技能可以被其他 AI 代理识别和加载。
 
 ### 可用技能列表
 
@@ -334,120 +343,4 @@ Let's Think Step by Step </ultimate_truth>
 </available_skills>
 ```
 
-### 技能加载方式
-
-Claude Code 或其他 AI 代理可以通过以下方式加载技能：
-
-1. **直接引用**：在对话中手动引用技能名称
-2. **命令调用**：使用 `/planning-with-files` 或 `/ui-ux-pro-max` 命令
-3. **OpenSkills CLI**：`npx openskills read planning-with-files`
-
-### 技能存储位置
-
-- **主要位置**：`.opencode/skills/<skill-name>/`
-- **模板和脚本**：存放在技能目录下的 `templates/`, `scripts/`, `references/` 子目录
-- **工作文件**：技能执行时创建的持久文件（如 task_plan.md）存放在用户的项目目录
-
-### 兼容性说明
-
-本仓库的技能完全兼容 OpenSkills 标准：
-- ✅ SKILL.md 格式：YAML frontmatter + Markdown 内容
-- ✅ 目录结构：符合 OpenSkills 技能规范
-- ✅ 工具权限：使用 `allowed-tools` 声明
-- ✅ Hooks 配置：支持 SessionStart, PreToolUse, PostToolUse, Stop 等生命周期钩子
-
----
-
-Augment 代码库检索 MCP 使用原则： - 优先使用 codebase-retrieval 工具进行代码搜索和分析 - 搜索时明确指定文件类型、路径模式和关键词 - 对搜索结果进行分层分析：文件结构 → 代码逻辑 → 架构模式 - 结合代码上下文提供架构级建议，而非局部修复 - 每次代码分析后更新 CLAUDE.md 文档，保持架构同步 [mcp_usage.\"auggie-mcp\"] tool = \"codebase-retrieval\" strategy = \"systematic-search\" # 系统化搜索策略 analysis_depth = \"architectural\" # 架构级分析深度 documentation_sync = true # 强制文档同步
-
-<skills_system priority="1">
-
-## Available Skills
-
-<!-- SKILLS_TABLE_START -->
-<usage>
-When users ask you to perform tasks, check if any of the available skills below can help complete the task more effectively. Skills provide specialized capabilities and domain knowledge.
-
-How to use skills:
-- Invoke: Bash("openskills read <skill-name>")
-- The skill content will load with detailed instructions on how to complete the task
-- Base directory provided in output for resolving bundled resources (references/, scripts/, assets/)
-
-Usage notes:
-- Only use skills listed in <available_skills> below
-- Do not invoke a skill that is already loaded in your context
-- Each skill invocation is stateless
-</usage>
-
-<available_skills>
-
-<skill>
-<name>planning-with-files</name>
-<description>Implements Manus-style file-based planning for complex tasks. Creates task_plan.md, findings.md, and progress.md. Use when starting complex multi-step tasks, research projects, or any task requiring >5 tool calls.</description>
-<location>project</location>
-</skill>
-
-<skill>
-<name>problem-finder</name>
-<description>Problem review and reuse workflow. Use when encountering errors, failures, debugging, regressions, or asking for similar past issues. Must check /docs/problem.md first.</description>
-<location>project</location>
-</skill>
-
-<skill>
-<name>code-audit</name>
-<description>Audit-grade code review. Use for code review, quality checks, architecture review, and compliance validation.</description>
-<location>project</location>
-</skill>
-
-<skill>
-<name>test-coverage</name>
-<description>Test planning and coverage strategy. Use for test plans covering change scope, E2E, core logic, and API coverage.</description>
-<location>project</location>
-</skill>
-
-<skill>
-<name>project-kickoff</name>
-<description>Project kickoff and solution discovery workflow. Use for project start, initialization, proposal discussion, technical selection, and requirement clarification.</description>
-<location>project</location>
-</skill>
-
-<skill>
-<name>ui-ux-pro-max</name>
-<description>"UI/UX design intelligence. 50 styles, 21 palettes, 50 font pairings, 20 charts, 9 stacks (React, Next.js, Vue, Svelte, SwiftUI, React Native, Flutter, Tailwind, shadcn/ui). Actions: plan, build, create, design, implement, review, fix, improve, optimize, enhance, refactor, check UI/UX code. Projects: website, landing page, dashboard, admin panel, e-commerce, SaaS, portfolio, blog, mobile app, .html, .tsx, .vue, .svelte. Elements: button, modal, navbar, sidebar, card, table, form, chart. Styles: glassmorphism, claymorphism, minimalism, brutalism, neumorphism, bento grid, dark mode, responsive, skeuomorphism, flat design. Topics: color palette, accessibility, animation, layout, typography, font pairing, spacing, hover, shadow, gradient."</description>
-<location>project</location>
-</skill>
-
-<skill>
-<name>doc-coauthoring</name>
-<description>Guide users through a structured workflow for co-authoring documentation. Use when user wants to write documentation, proposals, technical specs, decision docs, or similar structured content. This workflow helps users efficiently transfer context, refine content through iteration, and verify the doc works for readers. Trigger when user mentions writing docs, creating proposals, drafting specs, or similar documentation tasks.</description>
-<location>global</location>
-</skill>
-
-<skill>
-<name>docx</name>
-<description>"Comprehensive document creation, editing, and analysis with support for tracked changes, comments, formatting preservation, and text extraction. When Claude needs to work with professional documents (.docx files) for: (1) Creating new documents, (2) Modifying or editing content, (3) Working with tracked changes, (4) Adding comments, or any other document tasks"</description>
-<location>global</location>
-</skill>
-
-<skill>
-<name>pdf</name>
-<description>Comprehensive PDF manipulation toolkit for extracting text and tables, creating new PDFs, merging/splitting documents, and handling forms. When Claude needs to fill in a PDF form or programmatically process, generate, or analyze PDF documents at scale.</description>
-<location>global</location>
-</skill>
-
-<skill>
-<name>pptx</name>
-<description>"Presentation creation, editing, and analysis. When Claude needs to work with presentations (.pptx files) for: (1) Creating new presentations, (2) Modifying or editing content, (3) Working with layouts, (4) Adding comments or speaker notes, or any other presentation tasks"</description>
-<location>global</location>
-</skill>
-
-<skill>
-<name>skill-creator</name>
-<description>Guide for creating effective skills. This skill should be used when users want to create a new skill (or update an existing skill) that extends Claude's capabilities with specialized knowledge, workflows, or tool integrations.</description>
-<location>global</location>
-</skill>
-
-</available_skills>
-<!-- SKILLS_TABLE_END -->
-
-</skills_system>
+Augment 代码库检索 MCP 使用原则： - 优先使用 codebase-retrieval 工具进行代码搜索和分析 - 搜索时明确指定文件类型、路径模式和关键词 - 对搜索结果进行分层分析：文件结构 → 代码逻辑 → 架构模式 - 结合代码上下文提供架构级建议，而非局部修复 - 每次代码分析后更新 CLAUDE.md 文档，保持架构同步 [mcp_usage."auggie-mcp"] tool = "codebase-retrieval" strategy = "systematic-search" # 系统化搜索策略 analysis_depth = "architectural" # 架构级分析深度 documentation_sync = true # 强制文档同步
